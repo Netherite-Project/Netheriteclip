@@ -89,6 +89,12 @@ publishing {
 
                 developers {
                     developer {
+                        id.set("DemonWav")
+                        name.set("Kyle Wood")
+                        email.set("demonwav@gmail.com")
+                        url.set("https://github.com/DemonWav")
+                    }
+                    developer {
                         id.set("MC_XiaoHei")
                         name.set("MC_XiaoHei")
                         email.set("xiaohei.xor7studio@foxmail.com")
@@ -106,9 +112,9 @@ publishing {
 
         repositories {
             val url = if (isSnapshot) {
-                "https://repo.papermc.io/repository/maven-snapshots/"
+                "https://repo.leavesmc.top/snapshots/"
             } else {
-                "https://repo.papermc.io/repository/maven-releases/"
+                "https://repo.leavesmc.top/releases/"
             }
 
             maven(url) {

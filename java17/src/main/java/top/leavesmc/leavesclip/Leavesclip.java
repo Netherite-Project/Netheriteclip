@@ -23,7 +23,7 @@ public final class Leavesclip {
             System.exit(1);
         }
         System.out.println("Leavesclip is starting...");
-        AutoUpdate.init();
+        if (!Boolean.getBoolean("leavesclip.disable.auto-update")) AutoUpdate.init();
 
 
         final URL[] classpathUrls = setupClasspath();
