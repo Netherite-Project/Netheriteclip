@@ -118,7 +118,7 @@ record PatchEntry(
         // Get and verity patch data is correct
         final String fullPatchPath = "/META-INF/" + Util.endingSlash(this.location) + this.patchPath;
         final InputStream patchStream =
-                AutoUpdate.getResourceStream(AutoUpdate.autoUpdateCorePath, fullPatchPath);
+                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, fullPatchPath);
 //                PatchEntry.class.getResourceAsStream(fullPatchPath);
         if (patchStream == null) {
             throw new IllegalStateException("Patch file not found: " + fullPatchPath);
