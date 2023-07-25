@@ -54,9 +54,7 @@ class Util {
         } else {
             p = "/" + path;
         }
-        final InputStream stream =
-                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, p);
-//                Util.class.getResourceAsStream(p);
+        final InputStream stream = AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, p);
         if (stream == null) {
             return null;
         }

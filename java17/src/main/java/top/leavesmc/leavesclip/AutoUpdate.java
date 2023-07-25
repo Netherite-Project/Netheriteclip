@@ -6,32 +6,40 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class AutoUpdate {
+
     public static String autoUpdateCorePath;
     public static String autoUpdateDir = "auto_update";
     public static boolean useAutoUpdateJar = false;
 
     public static void init() {
         File workingDirFile = new File(autoUpdateDir);
-        if (!(workingDirFile.isDirectory() && workingDirFile.exists())) return;
+
+        if (!workingDirFile.isDirectory() || !workingDirFile.exists()) {
+            return;
+        }
 
         File corePathFile = new File(autoUpdateDir + "/core.path");
-        if (!(corePathFile.isFile() && corePathFile.exists())) return;
+        if (!corePathFile.isFile() || !corePathFile.exists()) {
+            return;
+        }
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(corePathFile))) {
             String firstLine = bufferedReader.readLine();
-            if (firstLine == null) return;
+            if (firstLine == null) {
+                return;
+            }
 
             autoUpdateCorePath = firstLine;
             File jarFile = new File(autoUpdateCorePath);
-            if (!(jarFile.isFile() && jarFile.exists())) {
+            if (!jarFile.isFile() || !jarFile.exists()) {
                 System.out.println("The specified server core: " + autoUpdateCorePath + " does not exist. Using the original jar!");
                 return;
             }
 
             useAutoUpdateJar = true;
 
-            if(!detectionLeavesclipVersion(autoUpdateCorePath)){
-                System.out.println("Leavesclip version detection in Server Core: "+ autoUpdateCorePath+" failed. Using the original jar!");
+            if (!detectionLeavesclipVersion(autoUpdateCorePath)) {
+                System.out.println("Leavesclip version detection in Server Core: " + autoUpdateCorePath + " failed. Using the original jar!");
                 useAutoUpdateJar = false;
                 return;
             }
@@ -41,25 +49,35 @@ public class AutoUpdate {
             e.printStackTrace();
         }
     }
-    private static boolean detectionLeavesclipVersion(String jarPath){
+
+    private static boolean detectionLeavesclipVersion(String jarPath) {
         byte[] localBytes;
+
         try (InputStream localStream = AutoUpdate.class.getResourceAsStream("/META-INF/leavesclip-version")) {
-            if (localStream == null) return false;
-            localBytes=localStream.readAllBytes();
+            if (localStream != null) {
+                localBytes = localStream.readAllBytes();
+            } else {
+                return false;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (InputStream externalStream = getResourceAsStream(jarPath,"/META-INF/leavesclip-version")) {
-            if (externalStream == null) return false;
-            if(Arrays.equals(localBytes, externalStream.readAllBytes()))
-                return true;
+
+        try (InputStream externalStream = getResourceAsStream(jarPath, "/META-INF/leavesclip-version")) {
+            if (externalStream != null) {
+                return Arrays.equals(localBytes, externalStream.readAllBytes());
+            }
+            return false;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
+
     public static InputStream getResourceAsStream(String jarPath, String name) {
-        if (!useAutoUpdateJar) return AutoUpdate.class.getResourceAsStream(name);
+        if (!useAutoUpdateJar) {
+            return AutoUpdate.class.getResourceAsStream(name);
+        }
+
         name = name.replaceFirst("/", "");
         InputStream result = null;
 

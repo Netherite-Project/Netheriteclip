@@ -17,14 +17,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Leavesclip {
+
     public static void main(final String[] args) {
         if (Path.of("").toAbsolutePath().toString().contains("!")) {
             System.err.println("Leavesclip may not run in a directory containing '!'. Please rename the affected folder.");
             System.exit(1);
         }
         System.out.println("Leavesclip is starting...");
-        if (!Boolean.getBoolean("leavesclip.disable.auto-update")) AutoUpdate.init();
 
+        if (!Boolean.getBoolean("leavesclip.disable.auto-update")) {
+            AutoUpdate.init();
+        }
 
         final URL[] classpathUrls = setupClasspath();
 
@@ -91,9 +94,7 @@ public final class Leavesclip {
     }
 
     private static PatchEntry[] findPatches() {
-        final InputStream patchListStream =
-                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, "/META-INF/patches.list");
-        //                Leavesclip.class.getResourceAsStream("/META-INF/patches.list");
+        final InputStream patchListStream = AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, "/META-INF/patches.list");
         if (patchListStream == null) {
             return new PatchEntry[0];
         }
@@ -125,9 +126,7 @@ public final class Leavesclip {
     }
 
     private static FileEntry[] findFileEntries(final String fileName) {
-        final InputStream libListStream =
-                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, "/META-INF/" + fileName);
-//                Leavesclip.class.getResourceAsStream("/META-INF/" + fileName);
+        final InputStream libListStream = AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, "/META-INF/" + fileName);
         if (libListStream == null) {
             return null;
         }

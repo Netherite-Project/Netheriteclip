@@ -11,6 +11,7 @@ package top.leavesmc.leavesclip;
 
 import io.sigpipe.jbsdiff.InvalidHeaderException;
 import io.sigpipe.jbsdiff.Patch;
+import org.apache.commons.compress.compressors.CompressorException;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -23,11 +24,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.commons.compress.compressors.CompressorException;
-
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 
 record PatchEntry(
         String location,
@@ -117,9 +114,7 @@ record PatchEntry(
 
         // Get and verity patch data is correct
         final String fullPatchPath = "/META-INF/" + Util.endingSlash(this.location) + this.patchPath;
-        final InputStream patchStream =
-                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, fullPatchPath);
-//                PatchEntry.class.getResourceAsStream(fullPatchPath);
+        final InputStream patchStream = AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, fullPatchPath);
         if (patchStream == null) {
             throw new IllegalStateException("Patch file not found: " + fullPatchPath);
         }

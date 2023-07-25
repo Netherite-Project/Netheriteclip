@@ -69,9 +69,7 @@ record FileEntry(byte[] hash, String id, String path) {
         }
 
         final String filePath = Util.endingSlash(baseDir) + this.path;
-        InputStream fileStream =
-                AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, filePath);
-//                FileEntry.class.getResourceAsStream(filePath);
+        InputStream fileStream = AutoUpdate.getResourceAsStream(AutoUpdate.autoUpdateCorePath, filePath);
         if (fileStream == null) {
             // This file is not in our jar, but may be in the original
             if (originalRootDir == null) {
