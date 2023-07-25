@@ -12,7 +12,7 @@ subprojects {
     }
 }
 
-val mainClass = "io.papermc.paperclip.Main"
+val mainClass = "top.leavesmc.leavesclip.Main"
 
 tasks.jar {
     val java6Jar = project(":java6").tasks.named("jar")
@@ -30,7 +30,7 @@ tasks.jar {
 
     from(file("license.txt")) {
         into("META-INF/license")
-        rename { "paperclip-LICENSE.txt" }
+        rename { "leavesclip-LICENSE.txt" }
     }
     rename { name ->
         if (name.endsWith("-LICENSE.txt")) {
@@ -66,10 +66,10 @@ publishing {
             withoutBuildIdentifier()
 
             pom {
-                val repoPath = "PaperMC/Paperclip"
+                val repoPath = "LeavesMC/Leavesclip"
                 val repoUrl = "https://github.com/$repoPath"
 
-                name.set("Paperclip")
+                name.set("Leavesclip")
                 description.set(project.description)
                 url.set(repoUrl)
                 packaging = "jar"
@@ -89,10 +89,10 @@ publishing {
 
                 developers {
                     developer {
-                        id.set("DemonWav")
-                        name.set("Kyle Wood")
-                        email.set("demonwav@gmail.com")
-                        url.set("https://github.com/DemonWav")
+                        id.set("MC_XiaoHei")
+                        name.set("MC_XiaoHei")
+                        email.set("xiaohei.xor7studio@foxmail.com")
+                        url.set("https://github.com/MC_XiaoHei")
                     }
                 }
 
@@ -113,7 +113,7 @@ publishing {
 
             maven(url) {
                 credentials(PasswordCredentials::class)
-                name = "paper"
+                name = "leavesmc"
             }
         }
     }

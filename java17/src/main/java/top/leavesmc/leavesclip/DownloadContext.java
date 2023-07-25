@@ -1,4 +1,4 @@
-package io.papermc.paperclip;
+package top.leavesmc.leavesclip;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -52,8 +52,8 @@ record DownloadContext(byte[] hash, URL url, String fileName) {
         System.out.println("Downloading " + this.fileName);
 
         try (
-            final ReadableByteChannel source = Channels.newChannel(this.url.openStream());
-            final FileChannel fileChannel = FileChannel.open(outputFile, CREATE, WRITE, TRUNCATE_EXISTING)
+                final ReadableByteChannel source = Channels.newChannel(this.url.openStream());
+                final FileChannel fileChannel = FileChannel.open(outputFile, CREATE, WRITE, TRUNCATE_EXISTING)
         ) {
             fileChannel.transferFrom(source, 0, Long.MAX_VALUE);
         } catch (final IOException e) {

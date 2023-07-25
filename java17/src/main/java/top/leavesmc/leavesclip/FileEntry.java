@@ -1,4 +1,4 @@
-package io.papermc.paperclip;
+package top.leavesmc.leavesclip;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,12 +48,12 @@ record FileEntry(byte[] hash, String id, String path) {
     }
 
     void extractFile(
-        final Map<String, URL> urls,
-        final PatchEntry[] patches,
-        final String targetName,
-        final Path originalRootDir,
-        final String baseDir,
-        final Path outputDir
+            final Map<String, URL> urls,
+            final PatchEntry[] patches,
+            final String targetName,
+            final Path originalRootDir,
+            final String baseDir,
+            final Path outputDir
     ) throws IOException {
         for (final PatchEntry patch : patches) {
             if (patch.location().equals(targetName) && patch.outputPath().equals(this.path)) {
@@ -69,7 +69,9 @@ record FileEntry(byte[] hash, String id, String path) {
         }
 
         final String filePath = Util.endingSlash(baseDir) + this.path;
-        InputStream fileStream = FileEntry.class.getResourceAsStream(filePath);
+        InputStream fileStream =
+                AutoUpdate.getResourceStream(AutoUpdate.autoUpdateCorePath, filePath);
+//                FileEntry.class.getResourceAsStream(filePath);
         if (fileStream == null) {
             // This file is not in our jar, but may be in the original
             if (originalRootDir == null) {
@@ -92,9 +94,9 @@ record FileEntry(byte[] hash, String id, String path) {
         Files.deleteIfExists(outputFile);
 
         try (
-            final InputStream stream = fileStream;
-            final ReadableByteChannel inputChannel = Channels.newChannel(stream);
-            final FileChannel outputChannel = FileChannel.open(outputFile, CREATE, WRITE, TRUNCATE_EXISTING)
+                final InputStream stream = fileStream;
+                final ReadableByteChannel inputChannel = Channels.newChannel(stream);
+                final FileChannel outputChannel = FileChannel.open(outputFile, CREATE, WRITE, TRUNCATE_EXISTING)
         ) {
             outputChannel.transferFrom(inputChannel, 0, Long.MAX_VALUE);
         }

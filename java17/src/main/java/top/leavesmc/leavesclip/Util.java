@@ -1,10 +1,6 @@
-package io.papermc.paperclip;
+package top.leavesmc.leavesclip;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -13,7 +9,8 @@ import java.util.Arrays;
 
 class Util {
 
-    private Util() {}
+    private Util() {
+    }
 
     public static MessageDigest sha256Digest = getSha256Digest();
 
@@ -57,7 +54,9 @@ class Util {
         } else {
             p = "/" + path;
         }
-        final InputStream stream = Util.class.getResourceAsStream(p);
+        final InputStream stream =
+                AutoUpdate.getResourceStream(AutoUpdate.autoUpdateCorePath, p);
+//                Util.class.getResourceAsStream(p);
         if (stream == null) {
             return null;
         }
@@ -74,6 +73,7 @@ class Util {
     static boolean isDataValid(final byte[] data, final byte[] hash) {
         return Arrays.equals(hash, sha256Digest.digest(data));
     }
+
     static boolean isFileValid(final Path file, final byte[] hash) {
         if (Files.exists(file)) {
             final byte[] fileBytes = readBytes(file);

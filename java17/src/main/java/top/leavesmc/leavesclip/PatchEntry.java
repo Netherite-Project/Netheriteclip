@@ -7,10 +7,11 @@
  * MIT License
  */
 
-package io.papermc.paperclip;
+package top.leavesmc.leavesclip;
 
 import io.sigpipe.jbsdiff.InvalidHeaderException;
 import io.sigpipe.jbsdiff.Patch;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
+
 import org.apache.commons.compress.compressors.CompressorException;
 
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -28,13 +30,13 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 
 record PatchEntry(
-    String location,
-    byte[] originalHash,
-    byte[] patchHash,
-    byte[] outputHash,
-    String originalPath,
-    String patchPath,
-    String outputPath
+        String location,
+        byte[] originalHash,
+        byte[] patchHash,
+        byte[] outputHash,
+        String originalPath,
+        String patchPath,
+        String outputPath
 ) {
     private static boolean announced = false;
 
@@ -76,13 +78,13 @@ record PatchEntry(
         }
 
         return new PatchEntry(
-            parts[0],
-            Util.fromHex(parts[1]),
-            Util.fromHex(parts[2]),
-            Util.fromHex(parts[3]),
-            parts[4],
-            parts[5],
-            parts[6]
+                parts[0],
+                Util.fromHex(parts[1]),
+                Util.fromHex(parts[2]),
+                Util.fromHex(parts[3]),
+                parts[4],
+                parts[5],
+                parts[6]
         );
     }
 
@@ -115,7 +117,9 @@ record PatchEntry(
 
         // Get and verity patch data is correct
         final String fullPatchPath = "/META-INF/" + Util.endingSlash(this.location) + this.patchPath;
-        final InputStream patchStream = PatchEntry.class.getResourceAsStream(fullPatchPath);
+        final InputStream patchStream =
+                AutoUpdate.getResourceStream(AutoUpdate.autoUpdateCorePath, fullPatchPath);
+//                PatchEntry.class.getResourceAsStream(fullPatchPath);
         if (patchStream == null) {
             throw new IllegalStateException("Patch file not found: " + fullPatchPath);
         }
@@ -130,8 +134,8 @@ record PatchEntry(
                 Files.createDirectories(outputFile.getParent());
             }
             try (
-                final OutputStream outStream =
-                    new BufferedOutputStream(Files.newOutputStream(outputFile, CREATE, WRITE, TRUNCATE_EXISTING))
+                    final OutputStream outStream =
+                            new BufferedOutputStream(Files.newOutputStream(outputFile, CREATE, WRITE, TRUNCATE_EXISTING))
             ) {
                 Patch.patch(originalBytes, patchBytes, outStream);
             }
