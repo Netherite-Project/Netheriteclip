@@ -1,3 +1,5 @@
+import kotlin.system.exitProcess
+
 plugins {
     java
     application
@@ -28,10 +30,26 @@ tasks.jar {
         )
     }
 
+    doFirst {
+        val clipVerFile = File("leavesclip-version")
+        if (!clipVerFile.exists()) {
+            if(!clipVerFile.createNewFile()){
+                println("failed to create file: leavesclip-version")
+                exitProcess(1)
+            }
+        }
+        clipVerFile.writeText(project.version.toString())
+    }
+
+    from(file("leavesclip-version")) {
+        into("META-INF")
+    }
+
     from(file("license.txt")) {
         into("META-INF/license")
         rename { "leavesclip-LICENSE.txt" }
     }
+
     rename { name ->
         if (name.endsWith("-LICENSE.txt")) {
             "META-INF/license/$name"
