@@ -23,7 +23,6 @@ public final class Leavesclip {
             System.err.println("Leavesclip may not run in a directory containing '!'. Please rename the affected folder.");
             System.exit(1);
         }
-        System.out.println("Leavesclip is starting...");
 
         if (!Boolean.getBoolean("leavesclip.disable.auto-update")) {
             AutoUpdate.init();

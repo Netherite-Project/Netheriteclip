@@ -39,7 +39,7 @@ public class AutoUpdate {
             useAutoUpdateJar = true;
 
             if (!detectionLeavesclipVersion(autoUpdateCorePath)) {
-                System.out.println("Leavesclip version detection in Server Core: " + autoUpdateCorePath + " failed. Using the original jar!");
+                System.out.println("Leavesclip version detection in server core: " + autoUpdateCorePath + " failed. Using the original jar!");
                 useAutoUpdateJar = false;
                 return;
             }
