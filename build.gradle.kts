@@ -14,7 +14,7 @@ subprojects {
     }
 }
 
-val mainClass = "top.leavesmc.leavesclip.Main"
+val mainClass = "org.netherite.netheriteclip.Main"
 
 tasks.jar {
     val java6Jar = project(":java6").tasks.named("jar")
@@ -31,23 +31,23 @@ tasks.jar {
     }
 
     doFirst {
-        val clipVerFile = File("leavesclip-version")
+        val clipVerFile = File("netheriteclip-version")
         if (!clipVerFile.exists()) {
             if(!clipVerFile.createNewFile()){
-                println("failed to create file: leavesclip-version")
+                println("failed to create file: netheriteclip-version")
                 exitProcess(1)
             }
         }
         clipVerFile.writeText(project.version.toString())
     }
 
-    from(file("leavesclip-version")) {
+    from(file("netheriteclip-version")) {
         into("META-INF")
     }
 
     from(file("license.txt")) {
         into("META-INF/license")
-        rename { "leavesclip-LICENSE.txt" }
+        rename { "netheriteclip-LICENSE.txt" }
     }
 
     rename { name ->
@@ -84,10 +84,10 @@ publishing {
             withoutBuildIdentifier()
 
             pom {
-                val repoPath = "LeavesMC/Leavesclip"
+                val repoPath = "Netherite-Project/Netheriteclip"
                 val repoUrl = "https://github.com/$repoPath"
 
-                name.set("Leavesclip")
+                name.set("Netheriteclip")
                 description.set(project.description)
                 url.set(repoUrl)
                 packaging = "jar"
@@ -107,10 +107,10 @@ publishing {
 
                 developers {
                     developer {
-                        id.set("DemonWav")
-                        name.set("Kyle Wood")
-                        email.set("demonwav@gmail.com")
-                        url.set("https://github.com/DemonWav")
+                        id.set("PancakseYT")
+                        name.set("Pancakse")
+                        email.set("pancakseyt@gmail.com")
+                        url.set("https://github.com/PancakseYT")
                     }
                     developer {
                         id.set("MC_XiaoHei")
@@ -137,7 +137,7 @@ publishing {
 
             maven(url) {
                 credentials(PasswordCredentials::class)
-                name = "leavesmc"
+                name = "netherite-project"
             }
         }
     }
