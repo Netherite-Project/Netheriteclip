@@ -20,11 +20,11 @@ public final class Leavesclip {
 
     public static void main(final String[] args) {
         if (Path.of("").toAbsolutePath().toString().contains("!")) {
-            System.err.println("Leavesclip may not run in a directory containing '!'. Please rename the affected folder.");
+            System.err.println("Netheriteclip may not run in a directory containing '!'. Please rename the affected folder.");
             System.exit(1);
         }
 
-        if (!Boolean.getBoolean("leavesclip.disable.auto-update")) {
+        if (!Boolean.getBoolean("netheriteclip.disable.auto-update")) {
             AutoUpdate.init();
         }
 
@@ -76,7 +76,7 @@ public final class Leavesclip {
 
         // Exit if user has set `paperclip.patchonly` or `leavesclip.patchonly` system property to `true`
         if (Boolean.getBoolean("paperclip.patchonly")
-                || Boolean.getBoolean("leavesclip.patchonly")) {
+                || Boolean.getBoolean("netheriteclip.patchonly")) {
             System.exit(0);
         }
 
