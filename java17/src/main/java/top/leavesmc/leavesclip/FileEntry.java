@@ -1,4 +1,4 @@
-package top.leavesmc.leavesclip;
+package org.netherite.netheriteclip;
 
 import java.io.BufferedReader;
 import java.io.IOException;
