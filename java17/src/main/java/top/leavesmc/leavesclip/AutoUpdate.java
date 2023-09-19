@@ -1,4 +1,4 @@
-package top.leavesmc.leavesclip;
+package org.netherite.netheriteclip;
 
 import java.io.*;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class AutoUpdate {
                 return;
             }
 
-            System.out.println("Using server core: " + autoUpdateCorePath + " provide by Leavesclip-Auto-Update");
+            System.out.println("Using server core: " + autoUpdateCorePath + " provide by Netheriteclip-Auto-Update");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class AutoUpdate {
     private static boolean detectionLeavesclipVersion(String jarPath) {
         byte[] localBytes;
 
-        try (InputStream localStream = AutoUpdate.class.getResourceAsStream("/META-INF/leavesclip-version")) {
+        try (InputStream localStream = AutoUpdate.class.getResourceAsStream("/META-INF/netheriteclip-version")) {
             if (localStream != null) {
                 localBytes = localStream.readAllBytes();
             } else {
@@ -63,7 +63,7 @@ public class AutoUpdate {
             throw new RuntimeException(e);
         }
 
-        try (InputStream externalStream = getResourceAsStream(jarPath, "/META-INF/leavesclip-version")) {
+        try (InputStream externalStream = getResourceAsStream(jarPath, "/META-INF/netheriteclip-version")) {
             if (externalStream != null) {
                 return Arrays.equals(localBytes, externalStream.readAllBytes());
             }
