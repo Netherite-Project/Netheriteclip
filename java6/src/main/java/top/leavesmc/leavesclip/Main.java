@@ -7,7 +7,7 @@
  * MIT License
  */
 
-package top.leavesmc.leavesclip;
+package org.netherite.netheriteclip;
 
 import java.lang.reflect.Method;
 
@@ -21,7 +21,7 @@ public final class Main {
         }
 
         try {
-            final Class<?> paperclipClass = Class.forName("top.leavesmc.leavesclip.Leavesclip");
+            final Class<?> paperclipClass = Class.forName("org.netherite.netheriteclip.Netheriteclip");
             final Method mainMethod = paperclipClass.getMethod("main", String[].class);
             mainMethod.invoke(null, (Object) args);
         } catch (final Exception e) {
